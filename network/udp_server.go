@@ -1,10 +1,11 @@
-package server
+package network
 
 import (
 	"context"
-	"log"
 	"net"
 	"time"
+
+	log "github.com/sirupsen/logrus"
 )
 
 const (
@@ -29,7 +30,14 @@ type UDPMsg struct {
 	handler    Handler
 }
 
-func (u *UDPMsg) Handle(context.Context) error {
+func (u *UDPMsg) Handle(ctx context.Context) error {
+	resp, err := u.handler.Handle(ctx, u.data)
+	if err != nil {
+		return err
+	}
+	if n, err := u.conn.WriteToUDP(resp, u.remoteAddr); err != nil || n != len(resp) {
+		return err
+	}
 	return nil
 }
 
@@ -56,7 +64,7 @@ func (s *UDPServer) recvMsg(ctx context.Context) {
 	for {
 		n, remoteAddr, err := s.conn.ReadFromUDP(recvBuf)
 		if err != nil {
-			log.Printf("error during read: %s", err)
+			log.Errorf("error during read: %s", err)
 		}
 
 		msg := &UDPMsg{
@@ -85,7 +93,9 @@ func (s *UDPServer) handle(ctx context.Context) {
 			go func() {
 				subCtx, cancel := context.WithTimeout(ctx, s.timeout)
 				defer cancel()
-				m.Handle(subCtx)
+				if err := m.Handle(subCtx); err != nil {
+					log.Error(err)
+				}
 			}()
 		}
 	}
