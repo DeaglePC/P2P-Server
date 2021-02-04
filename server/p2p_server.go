@@ -1,7 +1,12 @@
 package server
 
-import "github.com/DeaglePC/P2P-Server/network"
+import (
+	"context"
+)
 
 type P2PServer struct {
-	server network.Server
+}
+
+func (s *P2PServer) Handle(context.Context, []byte) ([]byte, error) {
+	return nil, nil
 }

@@ -14,8 +14,9 @@ const (
 
 type UDPServer struct {
 	addr    *net.UDPAddr
-	conn    *net.UDPConn
 	handler Handler
+
+	conn    *net.UDPConn
 	cancel  context.CancelFunc
 	timeout time.Duration
 
