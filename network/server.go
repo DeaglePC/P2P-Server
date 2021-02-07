@@ -9,8 +9,13 @@ type Server interface {
 	ListenAndServer() error
 }
 
+type Context struct {
+	context.Context
+	RemoteAddr *net.UDPAddr
+}
+
 type Handler interface {
-	Handle(context.Context, []byte) ([]byte, error)
+	Handle(Context, []byte) ([]byte, error)
 }
 
 func ListenAndServerUDP(addr string, handler Handler) error {

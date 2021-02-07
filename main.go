@@ -6,7 +6,7 @@ import (
 )
 
 func main() {
-	p2ps := &server.P2PServer{}
+	p2ps := server.NewP2PServer()
 	if err := network.ListenAndServerUDP("", p2ps); err != nil {
 		panic(err)
 	}

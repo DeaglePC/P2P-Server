@@ -32,7 +32,11 @@ type UDPMsg struct {
 }
 
 func (u *UDPMsg) Handle(ctx context.Context) error {
-	resp, err := u.handler.Handle(ctx, u.data)
+	resp, err := u.handler.Handle(Context{
+		Context:    ctx,
+		RemoteAddr: u.remoteAddr,
+	}, u.data)
+
 	if err != nil {
 		return err
 	}
