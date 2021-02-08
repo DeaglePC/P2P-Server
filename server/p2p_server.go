@@ -93,7 +93,7 @@ func (s *P2PServer) login(ctx network.Context, req proto.Message) (resp proto.Me
 	loginReq := req.(*LoginReq)
 
 	id := getID()
-	_ = s.clients.Store(&c.Info{
+	_ = s.clients.Store(&c.Client{
 		ID:                id,
 		Name:              loginReq.Name,
 		UDPAddr:           ctx.RemoteAddr,

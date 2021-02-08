@@ -2,7 +2,7 @@ package client
 
 import "net"
 
-type Info struct {
+type Client struct {
 	ID                uint64
 	Name              string
 	LastHeartbeatTime int64
@@ -10,8 +10,8 @@ type Info struct {
 }
 
 type Set interface {
-	Store(info *Info) error
-	Load(id uint64) (*Info, error)
+	Store(info *Client) error
+	Load(id uint64) (*Client, error)
 	Delete(id uint64) error
 	UpdateHeartbeat(id uint64) error
 	DeleteTimeOut(timeout int64) error
