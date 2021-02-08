@@ -12,6 +12,7 @@ type Server interface {
 type Context struct {
 	context.Context
 	RemoteAddr *net.UDPAddr
+	Conn       *net.UDPConn
 }
 
 type Handler interface {

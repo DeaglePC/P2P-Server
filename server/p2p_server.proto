@@ -17,6 +17,8 @@ enum RetCode {
   OK = 0;
   FAIL = 1;
   UserNotFound = 2;
+  TargetNotFound = 3;
+  ServerError = 4;
 }
 
 message MsgHeader {
@@ -63,18 +65,16 @@ message LogoutResp {
 // punch
 message PunchReq {
   uint64 ID = 1;
-  int64 TargetID = 2;
+  uint64 TargetID = 2;
 }
 
 message PunchResp {
   RetCode Result = 1;
   string Msg = 2;
-  string IP = 3;
-  uint32 Port = 4;
+  string Addr = 3;
 }
 
 // 客户端收到打洞请求
 message GetPunchReq {
-  string IP = 1;
-  uint32 Port = 2;
+  string Addr = 1;
 }

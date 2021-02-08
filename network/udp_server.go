@@ -35,6 +35,7 @@ func (u *UDPMsg) Handle(ctx context.Context) error {
 	resp, err := u.handler.Handle(Context{
 		Context:    ctx,
 		RemoteAddr: u.remoteAddr,
+		Conn:       u.conn,
 	}, u.data)
 
 	if err != nil {
