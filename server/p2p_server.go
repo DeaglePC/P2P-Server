@@ -61,6 +61,12 @@ func (s *P2PServer) Handle(ctx network.Context, data []byte) ([]byte, error) {
 	case MsgType_LOGIN_REQ:
 		resp = s.login(ctx, req)
 		respMsg.Header.Type = MsgType_LOGIN_RESP
+	case MsgType_LOGOUT_REQ:
+		resp = s.logout(ctx, req)
+		respMsg.Header.Type = MsgType_LOGOUT_RESP
+	case MsgType_PUNCH_REQ:
+		resp = s.punch(ctx, req)
+		respMsg.Header.Type = MsgType_PUNCH_RESP
 	}
 
 	respBytes, err := proto.Marshal(resp)
